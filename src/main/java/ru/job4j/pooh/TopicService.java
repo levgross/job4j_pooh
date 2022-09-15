@@ -10,15 +10,14 @@ public class TopicService implements Service {
             = new ConcurrentHashMap<>();
     @Override
     public Resp process(Req req) {
+        String text = "";
+        String status = "200";
         if (POST.equals(req.httpRequestType())) {
             for (ConcurrentHashMap<String, ConcurrentLinkedQueue<String>> map : topic.values()) {
                 map.get(req.getSourceName()).offer(req.getParam());
             }
-            return null;
-        }
-        String text = null;
-        String status = "200";
-        if (GET.equals(req.httpRequestType())) {
+            status = "201";
+        } else if (GET.equals(req.httpRequestType())) {
             topic.putIfAbsent(req.getParam(), new ConcurrentHashMap<>());
             topic.get(req.getParam()).putIfAbsent(req.getSourceName(), new ConcurrentLinkedQueue<>());
             text = topic.get(req.getParam()).get(req.getSourceName()).poll();

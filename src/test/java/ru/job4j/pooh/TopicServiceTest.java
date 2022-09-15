@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-class TopicServiceTest {
+public class TopicServiceTest {
     @Test
     public void whenTopic() {
         TopicService topicService = new TopicService();
@@ -14,7 +14,7 @@ class TopicServiceTest {
         topicService.process(
                 new Req("GET", "topic", "weather", paramForSubscriber1)
         );
-        topicService.process(
+        Resp resultPost = topicService.process(
                 new Req("POST", "topic", "weather", paramForPublisher)
         );
         Resp result1 = topicService.process(
@@ -24,6 +24,10 @@ class TopicServiceTest {
                 new Req("GET", "topic", "weather", paramForSubscriber2)
         );
         assertThat(result1.text()).isEqualTo("temperature=18");
+        assertThat(result1.status()).isEqualTo("200");
         assertThat(result2.text()).isEqualTo("");
+        assertThat(result2.status()).isEqualTo("204");
+        assertThat(resultPost.text()).isEqualTo("");
+        assertThat(resultPost.status()).isEqualTo("201");
     }
 }

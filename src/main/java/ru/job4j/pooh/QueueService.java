@@ -17,8 +17,7 @@ public class QueueService implements Service {
             queue.get(req.getSourceName()).offer(req.getParam());
             status = "201";
         } else if (GET.equals(req.httpRequestType())) {
-
-            text = queue.get(req.getSourceName()).poll();
+            text = queue.getOrDefault(req.getSourceName(), new ConcurrentLinkedQueue<>()).poll();
             if (text == null) {
                 text = "";
                 status = "204";

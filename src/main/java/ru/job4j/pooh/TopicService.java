@@ -13,7 +13,8 @@ public class TopicService implements Service {
         String text = "";
         String status = "200";
         if (POST.equals(req.httpRequestType())) {
-            for (ConcurrentLinkedQueue<String> queue : topic.get(req.getSourceName()).values()) {
+            for (ConcurrentLinkedQueue<String> queue
+                    : topic.getOrDefault(req.getSourceName(), new ConcurrentHashMap<>()).values()) {
                 queue.offer(req.getParam());
             }
             status = "201";

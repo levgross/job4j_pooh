@@ -23,11 +23,21 @@ public class TopicServiceTest {
         Resp result2 = topicService.process(
                 new Req("GET", "topic", "weather", paramForSubscriber2)
         );
+        Resp resultPostNew = topicService.process(
+                new Req("POST", "topic", "weather1", paramForPublisher)
+        );
+        Resp result3 = topicService.process(
+                new Req("GET", "topic", "weather1", paramForSubscriber1)
+        );
         assertThat(result1.text()).isEqualTo("temperature=18");
         assertThat(result1.status()).isEqualTo("200");
         assertThat(result2.text()).isEqualTo("");
         assertThat(result2.status()).isEqualTo("204");
         assertThat(resultPost.text()).isEqualTo("");
         assertThat(resultPost.status()).isEqualTo("201");
+        assertThat(resultPostNew.text()).isEqualTo("");
+        assertThat(resultPostNew.status()).isEqualTo("201");
+        assertThat(result3.text()).isEqualTo("");
+        assertThat(result3.status()).isEqualTo("204");
     }
 }

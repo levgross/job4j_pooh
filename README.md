@@ -46,11 +46,11 @@ curl -X GET http://localhost:9000/topic/weather/1
 ```
 
 ### Technologies:
-
+- Java 17
+- Maven 4.0,
 - Java Concurrency (classes from the java.util.concurrent package)
 - Sockets
 - Java IO
-- GSON Library
 - JUnit 5.4.0
 - AssertJ 3.23.1
 
